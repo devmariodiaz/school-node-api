@@ -5,7 +5,7 @@ const { QueryTypes } = require('sequelize');
 const Profile = db.Profile;
 
 exports.getAll = (req, res) => {
-    Profile.findAll()
+    Profile.findAll({ include: ['State']})
     .then(data => {
         res.send(data);
     })

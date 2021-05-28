@@ -1,7 +1,7 @@
 const sequelize = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
-    return sequelize.define('User', {
+    let User = sequelize.define('User', {
         UserId: {
             type: DataTypes.INTEGER,
             allowNull: false,
@@ -23,5 +23,16 @@ module.exports = (sequelize, DataTypes) => {
                 key: 'StateId'
             }
         },
+    }, {
+        timestamps: false,
+        tableName: 'User'
     });
+
+    User.associate = (models) => {
+        User.belongsToMany(models.Profile, {
+            through: 'User_Profiles'
+        })
+    }
+
+    return User;
 }

@@ -24,9 +24,11 @@ module.exports = (sequelize, DataTypes) => {
         timestamps: false
     });
 
-    Profile.belongsTo(State, {
-        foreignKey: 'StateId'
-    })
+    Profile.associate = (models) => {
+        Profile.belongsTo(models.State, {
+            foreignKey: {fieldName: 'StateId'}
+        })
+    };
 
     return Profile;
 }
