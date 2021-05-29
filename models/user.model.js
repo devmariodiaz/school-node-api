@@ -4,8 +4,8 @@ module.exports = (sequelize, DataTypes) => {
     let User = sequelize.define('User', {
         UserId: {
             type: DataTypes.INTEGER,
-            allowNull: false,
-            primarykey: true
+            autoIncrement: true,
+            primaryKey: true
         },
         Username : {
             type: DataTypes.STRING(100),
@@ -18,6 +18,7 @@ module.exports = (sequelize, DataTypes) => {
         StateId: {
             type: DataTypes.INTEGER,
             allowNull: false,
+            defaultValue: 1,
             references: {
                 model: 'State',
                 key: 'StateId'

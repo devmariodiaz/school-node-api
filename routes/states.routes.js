@@ -1,11 +1,11 @@
 const express = require('express');
-const jwtAuth = require('../auth/jwtAuth');
+const { tokenVerification } = require('../auth/jwtAuth');
 const db = require('../models');
 const ctrls = require('../controllers/states.controller')
 const router = express.Router();
 
-router.get('/', ctrls.getAll);
-router.get('/:id', ctrls.getById);
-router.post('/', ctrls.insert);
+router.get('/', tokenVerification, ctrls.getAll);
+router.get('/:id', tokenVerification, ctrls.getById);
+router.post('/', tokenVerification, ctrls.insert);
 
 module.exports = router;

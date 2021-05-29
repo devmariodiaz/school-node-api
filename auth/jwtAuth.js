@@ -6,25 +6,32 @@ const generateAccessToken = (user) =>{
 }
 
 const tokenVerification = (req, res, next) => {
-    const token = req.header('Authorization').split(' ')[1];
+    
+    const header = req.header('Authorization');
+    if(!header)
+        res.status(400).send('Bad Request');
+    else
+    {
+        const token = header.split(' ')[1];
 
-    if(!token){
-        return res.status(403).send({
-            message: 'No token provided'
-        });
-    }
-
-    jwt.verify(token, process.env.JWT_SECRET_KEY, (err, decoded) =>{
-        if(err){
-            return res.status(401).send({
-                message: 'Unauthorized'
+        if(!token){
+            return res.status(403).send({
+                message: 'No token provided'
             });
         }
-        next();
-    })
+
+        jwt.verify(token, process.env.JWT_SECRET_KEY, (err, decoded) =>{
+            if(err){
+                return res.status(401).send({
+                    message: 'Unauthorized'
+                });
+            }
+            next();
+        });
+    }
 }
 
-const jwtAuth = {
+module.exports = {
     tokenVerification,
     generateAccessToken
 }
